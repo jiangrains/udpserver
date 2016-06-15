@@ -3,20 +3,34 @@ import pymssql
 
 def test():
 	#conn = pymssql.connect(host='localhost:1433',user='JDC-WIN7\tplink',database='HondaSafetyTechTransTable')
-	conn = pymssql.connect(server="localhost", port="1433", user="sa", password="309jiang", database="HondaSafetyTechTransTable",charset="UTF-8")
+	conn = pymssql.connect(server="localhost", port="1433", user="sa", password="309jiang", database="Insole",charset="UTF-8")
 	cur = conn.cursor()
-	cur.execute('select * from InterActionTransTable')
 
-	#print cur.fetchall()
 
-	for row in cur:
-		print row[0], row[1], row[2]
+	sn = "#123456789012346"
+	cur.execute('select * from insole_register_info where sn = %s', (sn))
+	#cur.execute('select * from insole_register_info')
 
+	rows = cur.fetchall()
+	print "row number:%d" % cur.rowcount
+	
+	print rows[0],rows[0][2]
+	if rows[0][2] == 0:
+		print "hello"
+
+	sn = "#123456789011112"
+	INSOLE_STATE_REGISTERED = 2
+	#cur.execute('insert into insole_register_info values(%s, %d)', (sn, INSOLE_STATE_REGISTERED))
+	cur.execute('update insole_register_info set state = %d where sn = %s', (INSOLE_STATE_REGISTERED, sn))
+
+	#for row in rows:
+		#print row[0], row[1], row[2]
+	conn.commit()
 	cur.close()
 	conn.close()
 
 def sql_conn():
-	conn = pymssql.connect(server="localhost", port="1433", user="sa", password="309jiang", database="HondaSafetyTechTransTable",charset="UTF-8")
+	conn = pymssql.connect(server="localhost", port="1433", user="sa", password="309jiang", database="Insole",charset="UTF-8")
 	cur = conn.cursor()
 	return (conn, cur)
 
