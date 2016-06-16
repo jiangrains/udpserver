@@ -1,0 +1,18 @@
+Create table insole_register_info
+(
+id int identity(1,1),
+sn char(16) not null, 
+state int,
+);
+
+Create table insole_location_info
+(
+id int identity(1,1),
+sn char(16) not null, 
+mcc int,
+mnc int,
+lac int,
+cid int,
+bsic int,
+rxl int,
+);
