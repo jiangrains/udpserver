@@ -60,7 +60,9 @@ def send_register_reply(errcode, sn, address):
 	reply_packet = struct.pack("!H2b16s2I", length, INSOLE_VERSION, PACKET_TYPE_REGISTER_RESPONSE, sn, PACKET_MAGICNUM, state)
 
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	s.sendto(reply_packet, address)
+	reply_ip, reply_port = address
+	reply_address = (reply_ip, SERVER_PORT)
+	s.sendto(reply_packet, reply_address)
 	s.close()
 
 
